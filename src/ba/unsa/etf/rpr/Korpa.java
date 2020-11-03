@@ -2,12 +2,14 @@ package ba.unsa.etf.rpr;
 
 public class Korpa {
     private Artikl[] artikli =null;
-   static int ubaceno=0;
+    static int ubaceno=0;
+
     public Korpa(){
         artikli =new Artikl[50];
     }
+
     public boolean dodajArtikl(Artikl a){
-        if(ubaceno==49) return false;
+        if(ubaceno==50) return false;
         artikli[ubaceno]=new Artikl(a.getNaziv(), a.getCijena(), a.getKod());
         ubaceno++;
         return true;
@@ -15,12 +17,14 @@ public class Korpa {
     public Artikl[] getArtikli(){
         return artikli;
     }
+
     public Artikl izbaciArtiklSaKodom(String kod){
         Artikl pom=null;
+        if(getArtikli()!=null)
         for(int i=0; i<ubaceno; i++){
-            if(artikli[i].getKod().equals(kod)){
+            if(getArtikli()[i].getKod().equals(kod)){
                 pom=new Artikl(artikli[i].getNaziv(), artikli[i].getCijena(), artikli[i].getKod());
-                for(int j=i; j<ubaceno-1; j++) artikli[j]=artikli[j+1];
+                if (ubaceno - 1 - i >= 0) System.arraycopy(artikli, i + 1, artikli, i, ubaceno - 1 - i);
                 ubaceno--;
                 return pom;
             }
